@@ -2,7 +2,7 @@
 
 Converts image matches to COLMAP format.
 
-## Important to Note:
+## Note:
 
 COLMAP requires matches to be in relation to the original input image scale/coordinate system. Within COLMAP's sparse and dense reconstruction processes, it will load images from the original path. Ensure that the matches you use are related to the original images and not rescaled images.
 
@@ -55,6 +55,22 @@ python colmap_reconstructer.py --input_path "$out_directory" --image_path "$img_
 If you want to adjust how this is run and modify the regular COLMAP reconstruction settings, `colmap_reconstructer.py` is where you would make those changes.
 
 > **Note:** You can also use these matches with [glomap](https://github.com/colmap/glomap) by creating a script like `colmap_reconstructer.py` for glomap.
+
+## Branches Overview:
+
+### Main Branch: 
+Intended to convert matches into a format compatible with COLMAP. The database can then be used with the standard COLMAP pipeline.
+
+### Glomap Branch: 
+The `glomap` branch introduces a modified approach to importing matches in a way that is compatible with [glomap](https://github.com/colmap/glomap). To use `glomap` with this custom match database, ensure you have already installed [glomap](https://github.com/colmap/glomap) along with its dependencies (`COLMAP`, `PoseLib`, etc.). Here's an example:
+
+```bash
+# Convert matches and generate a custom match database.
+python match_converter.py --matches "$matches_path" --output_path "$out_directory" --img_dir "$img_dir" --matcher "aliked-lg"
+
+# Use the resulting database in your glomap pipeline.
+glomap mapper --database_path ./example/colmap.db --image_path $image_path --output_path ./example 
+```
 
 ## Citation:
 
