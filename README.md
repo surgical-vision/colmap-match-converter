@@ -54,7 +54,7 @@ python colmap_reconstructer.py --input_path "$out_directory" --image_path "$img_
 ```
 If you want to adjust how this is run and modify the regular COLMAP reconstruction settings, `colmap_reconstructer.py` is where you would make those changes.
 
-> **Note:** You can also use these matches with [glomap](https://github.com/colmap/glomap) by creating a script like `colmap_reconstructer.py` for glomap.**
+> **Note:** You can also use these matches with [glomap](https://github.com/colmap/glomap) by creating a script like `colmap_reconstructer.py` for glomap.
 
 ## Citation:
 
