@@ -25,6 +25,7 @@ def import_into_colmap(img_dir,
     single_camera = False
     fname_to_id = add_keypoints(db, output_path, img_dir, 'simple-radial', single_camera)
     add_matches(db, output_path, fname_to_id)
+    add_inlier_matches(db, output_path, fname_to_id)
     db.commit()
     return
 
@@ -134,6 +135,37 @@ def add_matches(db, h5_path, fname_to_id):
             
                 matches = group[key_2][()]
                 db.add_matches(id_1, id_2, matches)
+
+                added.add(pair_id)
+
+                pbar.update(1)
+
+def add_inlier_matches(db, h5_path, fname_to_id):
+    """
+    Adds inlier matches to the two_view_geometries table in the COLMAP database.
+    """
+    match_file = h5py.File(os.path.join(h5_path, 'matches.h5'), 'r')
+
+    added = set()
+    n_keys = len(match_file.keys())
+    n_total = (n_keys * (n_keys - 1)) // 2
+
+    with tqdm(total=n_total, desc='Adding inlier matches') as pbar:
+        for key_1 in match_file.keys():
+            group = match_file[key_1]
+            for key_2 in group.keys():
+                id_1 = fname_to_id[key_1]
+                id_2 = fname_to_id[key_2]
+
+                pair_id = image_ids_to_pair_id(id_1, id_2)
+                if pair_id in added:
+                    warnings.warn(f'{YELLOW}Pair {pair_id} ({id_1}, {id_2}) already added!{RESET}')
+                    continue
+
+                matches = group[key_2][()]
+
+                # Add the inlier matches to the two_view_geometries table
+                db.add_two_view_geometry(id_1, id_2, matches)
 
                 added.add(pair_id)
 
