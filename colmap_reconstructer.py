@@ -74,12 +74,10 @@ def load_all_cameras(output_path, num_reconstructions):
 
 if __name__ == '__main__':
 
-    example_image_path = '/home/chiara/workspace/image-matching/eccv-paper-2024/image-matching-models/output/imm/scene_0/scene_processed_images'
-
     parser = argparse.ArgumentParser(description='run ransac and reconstruct')
     parser.add_argument('--input_path', type=str, default='output/superpoint', help='path to directory containing colmap db')
     parser.add_argument('--output_path', type=str, default=None, help='path to output directory. default is input_path')
-    parser.add_argument('--image_path', type=str, default=example_image_path, help='path to images, should be the scene_processed_images')
+    parser.add_argument('--image_path', type=str, help='path to images, should be the scene_processed_images')
     parser.add_argument('--verbose', action='store_true', default=False, help='print more information')
     args = parser.parse_args()
 
@@ -100,7 +98,7 @@ if __name__ == '__main__':
 
     cameras = load_all_cameras(args.output_path, len(maps))
 
-    # need to create a poses.txt with f.write('image_name,rotation_matrix,translation_vector,calibration_matrix,dataset,scene\n')
+    # need to create a poses.txt with f.write('image_name,rotation_matrix,translation_vector,calibration_matrix,scene\n')
     if best_idx is not None: 
         if args.verbose:
             print(maps[best_idx].summary())
@@ -135,8 +133,7 @@ if __name__ == '__main__':
                 translation_vec_str = ';'.join(map(str, translation_vec))
                 calibration_matrix_str = ';'.join(map(str, calibration_matrix.flatten()))
 
-                dataset = 'imc24' if 'imc' in args.image_path or 'imm' in args.image_path else 'niantic'
-                f.write(f'{img_name},{rotation_dir_str},{translation_vec_str},{calibration_matrix_str},{dataset},{scene}\n')
+                f.write(f'{img_name},{rotation_dir_str},{translation_vec_str},{calibration_matrix_str},{scene}\n')
     else:
         print(f'{RED}No reconstruction found{RESET}')
         print(f'{CYAN}=============================================================================={RESET}')
