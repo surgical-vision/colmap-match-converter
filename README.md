@@ -25,7 +25,7 @@ This repo was based on the matches created by, and we are very grateful for, the
 
 - [Image Matching Models](https://github.com/gmberton/image-matching-models): This repository allows easy use of many image matching models and standardizes all their outputs. We recommend getting matches from this repository.
 
-However, keep in mind their repository outputs matches in relation to rescaled images (i.e., 512x512). Some minor adjustments need to be made to the `basematcher` class to output the un-rescaled (or re-rescaled, if you will) matches in relation to the original images. We made these minor changes in our repo, which is built on their repo and can be found here: [link].
+However, keep in mind their repository outputs matches in relation to rescaled images (i.e., 512x512). Some minor adjustments need to be made to the `basematcher` class to output the un-rescaled (or re-rescaled, if you will) matches in relation to the original images. We made these minor changes in our repo, which is built on their repo and will eventually be linked here: [link].
 
 And of course, the COLMAP repository:
 
