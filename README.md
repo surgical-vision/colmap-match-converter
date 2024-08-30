@@ -77,14 +77,13 @@ glomap mapper --database_path ./example/colmap.db --image_path $image_path --out
 If you can make use of this in your own research, please be so kind as to cite our paper:
 
 ```bibtex
-@Article{,
-  author       = {},
-  title        = {},
-  journal      = {},
-  number       = {},
-  volume       = {},
-  month        = {},
-  year         = {},
-  url          = {}
+@misc{bonilla2024mismatchedevaluatinglimitsimage,
+      title={Mismatched: Evaluating the Limits of Image Matching Approaches and Benchmarks}, 
+      author={Sierra Bonilla and Chiara Di Vece and Rema Daher and Xinwei Ju and Danail Stoyanov and Francisco Vasconcelos and Sophia Bano},
+      year={2024},
+      eprint={2408.16445},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2408.16445}, 
 }
 ```
